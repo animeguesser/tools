@@ -26,6 +26,16 @@ remove_anime = [
     "Escaflowne",
     "Psycho-Pass RE:Start",
     "Psycho-Pass 3",
+    "Gundam Seed Destiny HD Remaster",
+    "Gundam: G no Reconguista",
+    "Kidou Senshi Gundam SEED Destiny",
+    "Kidou Senshi Gundam: Tekketsu no Orphans - Tokubetsu-hen",
+    "Mobile Suit Gundam 00: 10th Anniversary Project",
+    "Mobile Suit Gundam Seed HD Remaster",
+    "Mobile Suit Gundam UC2",
+    "Mobile Suit SD Gundam The Movie: Musha Knight Commando: SD Gundam Scramble",
+    "Space Gundam V",
+    "Gundam Build Fighters",
 
     # Similar synonyms 
     "Shi Er Shengxiao: Fuxing Gao Zhao Zhu Xiao Ba",
@@ -92,7 +102,8 @@ skip_movie_entries = [
     "Girls & Panzer",
     "Eureka Seven",
     "Hamtarou",
-    "Initial D"
+    "Initial D",
+    "Gundam"
 ]
 
 data = json.load(f)
