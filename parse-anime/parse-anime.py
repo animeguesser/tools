@@ -4,7 +4,7 @@ import pandas as pd
 # File from https://github.com/manami-project/anime-offline-database
 f = open('anime-offline-database.json')
 
-# List of items to remove
+# Skip entries if these match exactly
 remove_anime = [
     # Other seasons
     "Initial D Fifth Stage",
@@ -12,32 +12,28 @@ remove_anime = [
     "Initial D Fourth Stage",
     "Initial D Second Stage",
     "Initial D Third Stage",
-    "Shin Gekijouban Initial D",
-    "New Initial D Movie: Legend 1 - Kakusei",
-    "New Initial D Movie: Legend 2 - Tousou",
-    "New Initial D Movie: Legend 3 - Mugen",
     "Tottoko Hamtaro (2012)",
     "Tottoko Hamtaro Dechu",
     "Tottoko Hamtarou Hai!",
-    "Tottoko Hamtarou Movie 1: Ham-Ham Land Daibouken",
-    "Tottoko Hamtarou Movie 2: Ham-Ham Hamuuja! Maboroshi no Princess",
-    "Tottoko Hamtarou Movie 3: Ham Ham Grand Prix Aurora Tani no Kiseki - Ribon-chan Kiki Ippatsu!",
-    "Tottoko Hamtarou Movie 4: Hamtaro to Fushigi no Oni no Emon Tou",
     "Tottoko Hamtarou: Hamu Hamu Paradichu!",
-    "Boruto: Naruto the Movie",
     "Naruto (Shinsaku Anime)",
     "Naruto SD: Rock Lee no Seishun Full-Power Ninden",
-    "Naruto Soyokazeden Movie: Naruto to Mashin to Mitsu no Onegai Dattebayo!!",
-    "Naruto: Honoo no Chuunin Shiken! Naruto vs. Konohamaru!!",
     ".hack\/\/Roots",
     ".hack\/\/Tasogare no Udewa Densetsu",
     ".hack\/\/The Movie: Sekai no Mukou ni",
+    "Akira (Shin Anime)",
+    "Eureka Seven AO",
+    "Escaflowne",
+    "Psycho-Pass RE:Start",
+    "Psycho-Pass 3",
+
     # Similar synonyms 
     "Shi Er Shengxiao: Fuxing Gao Zhao Zhu Xiao Ba",
     "Fuxing Ba Jie",
 ]
 
-other_seasons = [
+# Skip enteries if it contains 'Season xx'
+skip_seasons_entries = [
     "Season 0",
     "Season 2",
     "Season 3",
@@ -82,7 +78,21 @@ other_seasons = [
     "Season III",
     "Season Two",
     "Part 2",
-    "Naruto Movie"
+    "Part 3",
+    "Part 4",
+    "Part 5",
+    "Part 6",
+]
+
+# Skip these entries if it's a movie AND contains one of these
+skip_movie_entries = [
+    "Detective Conan",
+    "Naruto",
+    "Psycho-Pass",
+    "Girls & Panzer",
+    "Eureka Seven",
+    "Hamtarou",
+    "Initial D"
 ]
 
 data = json.load(f)
@@ -95,10 +105,12 @@ for i in data['data']:
 
         skip_loop = False
 
+        # Remove extra unwanted entries if it's in the title
         if i['title'] in remove_anime:
             continue
 
-        for seasons in other_seasons:
+        # Remove unwanted if it's in the seasons
+        for seasons in skip_seasons_entries:
             if seasons in i['title']:
                 skip_loop = True
                 break
@@ -108,18 +120,27 @@ for i in data['data']:
 
         toss_based_on_synonym = False
 
-        # Only keep synonyms that don't have unicode in them
+        # Cycle through the synonymns
         new_synonyms = []
         for j in i['synonyms']:
 
-            for seasons in other_seasons:
+            # Remove extra unwanted enteries if it's in the synonym
+            for seasons in skip_seasons_entries:
                 if seasons in j:
                     toss_based_on_synonym = True
                     break
             
+            # Remove unwanted entries if it's a synonym AND a movie
+            if i['type'] == 'MOVIE':
+                for movies in skip_movie_entries:
+                    if movies in j:
+                        toss_based_on_synonym = True
+                        break
+            
             if toss_based_on_synonym == True:
                 break
 
+            # Only keep synonyms that don't have unicode in them
             if j.isascii():
                 new_synonyms.append(j)
 
