@@ -1,9 +1,6 @@
 import json
 import pandas as pd
 
-# File from https://github.com/manami-project/anime-offline-database
-f = open('anime-offline-database.json')
-
 # Skip entries if these match exactly
 remove_anime = [
     # Other seasons
@@ -100,11 +97,59 @@ remove_anime = [
     "Fate\/stay night: Unlimited Blade Works",
     "Fate\/Zero",
     "Fate\/Zero Cafe",
-    
+    "Final Fantasy VII: Advent Children - Venice Film Festival Footage",
+    "FLCL: Shoegaze",
+    "Free! Dive to the Future: Ima kara demo Wakaru \u201cFree! Series\u201d",
+    "Fruits Basket 1st Season",
+    "Fruits Basket: Prelude",
+    "Fate/Extra: Last Encore",
+    "Fate/Apocrypha",
+    "Fate/Grand Order: Zettai Majuu Sensen Babylonia",
+    "Fate/Extra: Last Encore - Illustrias Tendousetsu",
+    "Fate/kaleid liner Prisma\u2606Illya: Prisma\u2606Phantasm",
+    "Fate/stay night: Unlimited Blade Works",
+    "Fate/Zero",
+    "Fate/Zero Cafe",
+    "Time Bokan 2000: Kaitou Kiramekiman",
+    "Time Bokan 24",
+    "Zombieland Saga Movie",
+    "Zoids: Chaotic Century",
+    "Zoids: Guardian Force",
+    "Queen's Blade: Rebellion",
+    "Queen's Blade: Gyokuza wo Tsugu Mono",
+    "Shen Bing Xiaojiang Movie",
+    "Kono Subarashii Sekai ni Bakuen wo!",
+    "Kono Subarashii Sekai ni Shukufuku wo! 2",
+    "Kono Subarashii Sekai ni Shukufuku wo! Movie: Kurenai Densetsu",
+    "Little Witch Academia: Mahoujikake no Parade",
+    "Gochuumon wa Usagi desu ka?? Dear My Sister",
+    "Break Blade Movie 3: Kyoujin no Ato",
+    "Saint\u2606Oniisan (Movie)",
+    "Bungou Stray Dogs: Dead Apple",
+    "Kidou Keisatsu Patlabor 2 the Movie",
+    "Quanzhi Gaoshou: Dianfeng Rongyao",
+    "Persona 3 the Movie 4: Winter of Rebirth",
+    "Luo Xiao Hei Zhan Ji (Movie)",
+    "Chuunibyou demo Koi ga Shitai! Movie: Take On Me",
+    "Mahou Shoujo Lyrical Nanoha: The Movie 2nd A's",
+    "Black Clover: Mahou Tei no Ken",
+    "Natsume Yuujinchou: Ishi Okoshi to Ayashiki Raihousha",
+    "Kyoukai no Kanata Movie 2: I'll Be Here - Mirai-hen",
+    "Doraemon Movie 31: Shin Nobita to Tetsujin Heidan - Habatake Tenshi-tachi",
+    "Stand By Me Doraemon 2",
+    "Berserk: Ougon Jidai-hen III - Kourin",
+    "K-On! Movie",
+    "Violet Evergarden Gaiden: Eien to Jidou Shuki Ningyou",
+    "Saenai Heroine no Sodatekata Fine",
+    "Yuru Camp\u25b3 Movie",
+    "The First Slam Dunk",
+    "Kaguya-sama wa Kokurasetai: First Kiss wa Owaranai",
+
     # Similar synonyms 
     "Shi Er Shengxiao: Fuxing Gao Zhao Zhu Xiao Ba",
     "Fuxing Ba Jie",
     "Onigiri",
+    
 ]
 
 # Skip these entries if it's a movie AND contains one of these
@@ -149,7 +194,10 @@ skip_movie_entries = [
     "Hibike! Euphonium",
     "Himitsu no Akko-chan",
     "Himitsukessha Taka no Tsume",
-    "Hinomaru Hatanosuke"
+    "Hinomaru Hatanosuke",
+    "FLCL",
+    "Free!",
+    "Fate/Grand Order",
 ]
 
 # Skip these entries if it's a TV and contains one of these:
@@ -161,7 +209,42 @@ skip_tv_entries = [
     "Pororo",
     "Hime Chen",
     "Himitsu no Akko-chan",
-    "Himitsukessha Taka no Tsume"
+    "Himitsukessha Taka no Tsume",
+    "Flowering Heart",
+    "Fu Guo",
+    "Fate/kaleid liner Prisma",
+    "Fei ",
+    "Gangtie Feilong",
+    "Kuaile ",
+    "Tianyan",
+    "Time Bokan Series",
+    "Lixian",
+    "Zhang ",
+    "Zhen ",
+    "Zhi ",
+    "Zui ",
+    "Zoids ",
+    "Zi ",
+    "Qi ",
+    "Quwei",
+    "Mengxiang",
+    "Xiao ",
+    "Xun",
+    "Liang",
+    "Xiaojiang",
+    "Shen ",
+    "Konglong",
+    "Xi ",
+    "Xiaolong",
+    "Xiaoxiong",
+    "Xiaoyuan",
+    "Xin ",
+    "Xing ",
+    "Xiaokang",
+    "Xiaohu",
+    "Xianggu",
+    "Wu ",
+    "Wudang"
 ]
 
 # Skip enteries if it contains 'Season xx'
@@ -216,6 +299,7 @@ skip_seasons_entries = [
     "Part 6",
 ]
 
+f = open('matched-anime-list.json')
 data = json.load(f)
 parsed = [] # list of parsed names
 
@@ -298,4 +382,7 @@ df = df.drop(['sources', 'status', 'picture', 'thumbnail', 'relations', 'tags', 
 
 # Outputs
 df.reset_index().to_json(r'parsed-anime-list.json', orient='records', indent=2)
+
+# Remove additional columns for mini version
+df = df.drop(['type'], axis=1) # remove columns
 df.reset_index().to_json(r'parsed-anime-list-mini.json', orient='records')
