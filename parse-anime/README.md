@@ -1,3 +1,8 @@
+# Get-MAL
+Using the MyAnimeList API, we will want to get the top relevant animes. This will help us parse down a list that is smaller in size and since we we most likely be choosing more popular animes
+
+# Match MAL offline db
+
 # Anime list parser
 Using the anime database list from: https://github.com/manami-project/anime-offline-database, this python script will parse and shorten the anime list to only ones needed for this project.
 
