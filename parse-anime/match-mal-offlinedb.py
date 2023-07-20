@@ -13,18 +13,25 @@ matched_list = {'data': []}
 unmatched_list = []
 
 # Match the title from the MAL API to the offline DB
-for title in mal_anime:
+for mal in mal_anime:
     found = False
 
     for anime in anime_db['data']:
-        if anime['title'] == title:
+        if anime['title'] == mal['title']:
+            anime['mal_id'] = mal['id']
+
+            try:
+                anime['en'] = mal['en']
+            except KeyError:
+                pass
+            
             matched_list['data'].append(anime)
             found = True
             break
 
     # Create an list of unmatched titles
     if found == False:
-        unmatched_list.append(title)
+        unmatched_list.append(mal['title'])
 
 # Write to disk the matched titles
 with open('matched-anime-list.json', 'w') as f:
@@ -32,5 +39,3 @@ with open('matched-anime-list.json', 'w') as f:
 
 # Print out unmatched titles
 print(f'Could not match the following, add manually (if wanted)\n: {unmatched_list}')
-
-    

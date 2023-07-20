@@ -299,6 +299,11 @@ skip_seasons_entries = [
     "Part 6",
 ]
 
+# Exclude from removal
+exclude_from_removal = [
+    "Kara no Kyoukai Movie: Mirai Fukuin"
+]
+
 f = open('matched-anime-list.json')
 data = json.load(f)
 parsed = [] # list of parsed names
@@ -309,13 +314,17 @@ for i in data['data']:
     if i['type'] == 'MOVIE' or i['type'] == 'TV':
 
         skip_loop = False
+        keep_entry = False
+
+        if i['title'] in exclude_from_removal:
+            keep_entry = True
 
         # Remove extra unwanted entries if it's in the title
-        if i['title'] in remove_anime:
+        if i['title'] in remove_anime and not keep_entry:
             continue
         
         # Remove unwanted entries if it's in the title AND a movie
-        if i['type'] == 'MOVIE':
+        if i['type'] == 'MOVIE' and not keep_entry:
             for movies in skip_movie_entries:
                 if movies in i['title']:
                     skip_loop = True
@@ -325,7 +334,7 @@ for i in data['data']:
             continue
 
         # Remove unwanted entries if it's in the title AND a TV
-        if i['type'] == 'TV':
+        if i['type'] == 'TV' and not keep_entry:
             for tv in skip_tv_entries:
                 if tv in i['title']:
                     skip_loop = True
@@ -336,7 +345,7 @@ for i in data['data']:
 
         # Remove unwanted if it's in the seasons
         for seasons in skip_seasons_entries:
-            if seasons in i['title']:
+            if seasons in i['title'] and not keep_entry:
                 skip_loop = True
                 break
 
@@ -351,12 +360,12 @@ for i in data['data']:
 
             # Remove extra unwanted enteries if it's in the synonym
             for seasons in skip_seasons_entries:
-                if seasons in j:
+                if seasons in j and not keep_entry:
                     toss_based_on_synonym = True
                     break
             
             # Remove unwanted entries if it's a synonym AND a movie
-            if i['type'] == 'MOVIE':
+            if i['type'] == 'MOVIE' and not keep_entry:
                 for movies in skip_movie_entries:
                     if movies in j:
                         toss_based_on_synonym = True
@@ -372,13 +381,20 @@ for i in data['data']:
         if toss_based_on_synonym == True:
             continue
 
-        i['synonyms'] = new_synonyms
+        try:
+            if i['title'] != i['en'] and i['en'] is not None:
+                new_synonyms.insert(0, i['en'])
+        except KeyError:
+            pass
+
+        #i['synonyms'] = list(set(new_synonyms))
+        i['synonyms'] = list(dict.fromkeys(new_synonyms))
         parsed.append(i)
 
 
 # Convert to dataframe for further parsing
 df = pd.DataFrame(parsed)
-df = df.drop(['sources', 'status', 'picture', 'thumbnail', 'relations', 'tags', 'episodes', 'animeSeason'], axis=1) # remove columns
+df = df.drop(['en', 'mal_id', 'sources', 'status', 'picture', 'thumbnail', 'relations', 'tags', 'episodes', 'animeSeason'], axis=1) # remove columns
 
 # Outputs
 df.reset_index().to_json(r'parsed-anime-list.json', orient='records', indent=2)

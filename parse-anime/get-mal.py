@@ -11,7 +11,7 @@ anime_list = []
 while offset < 5000:
 
     # Can only get 500 at a time
-    url = f'https://api.myanimelist.net/v2/anime/ranking?ranking_type=tv&limit=500&offset={offset}'
+    url = f'https://api.myanimelist.net/v2/anime/ranking?ranking_type=tv&fields=id,title,alternative_titles&limit=500&offset={offset}'
     resp = requests.get(url, headers={
         'X-MAL-CLIENT-ID': CLIENT_ID
     })
@@ -19,7 +19,7 @@ while offset < 5000:
 
     # Add into our list
     for node in anime['data']:
-        anime_list.append(node['node']['title'])
+        anime_list.append({'title': node['node']['title'], 'id': node['node']['id'], 'en': node['node']['alternative_titles']['en']})
 
     # Start at the next 500
     offset = offset + 500
@@ -32,7 +32,7 @@ offset = 0
 while offset < 250:
     
     # Limit to 250 entries at a time
-    url = f'https://api.myanimelist.net/v2/anime/ranking?ranking_type=movie&limit=250&offset={offset}'
+    url = f'https://api.myanimelist.net/v2/anime/ranking?ranking_type=movie&fields=id,title,alternative_titles&limit=250&offset={offset}'
     resp = requests.get(url, headers={
         'X-MAL-CLIENT-ID': CLIENT_ID
     })
@@ -40,7 +40,7 @@ while offset < 250:
 
     # Add into our list
     for node in anime['data']:
-        anime_list.append(node['node']['title'])
+        anime_list.append({'title': node['node']['title'], 'id': node['node']['id'], 'en': node['node']['alternative_titles']['en']})
 
     # Start at the next 250
     offset = offset + 250
