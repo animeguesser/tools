@@ -98,7 +98,6 @@ remove_anime = [
     "Fate\/Zero",
     "Fate\/Zero Cafe",
     "Final Fantasy VII: Advent Children - Venice Film Festival Footage",
-    "FLCL: Shoegaze",
     "Free! Dive to the Future: Ima kara demo Wakaru \u201cFree! Series\u201d",
     "Fruits Basket 1st Season",
     "Fruits Basket: Prelude",
@@ -144,6 +143,10 @@ remove_anime = [
     "Yuru Camp\u25b3 Movie",
     "The First Slam Dunk",
     "Kaguya-sama wa Kokurasetai: First Kiss wa Owaranai",
+    "White Album",
+    "Saenai Heroine no Sodatekata \u266d",
+    "Working'!!",
+    "WWW.Working!!",
 
     # Similar synonyms 
     "Shi Er Shengxiao: Fuxing Gao Zhao Zhu Xiao Ba",
@@ -195,9 +198,8 @@ skip_movie_entries = [
     "Himitsu no Akko-chan",
     "Himitsukessha Taka no Tsume",
     "Hinomaru Hatanosuke",
-    "FLCL",
     "Free!",
-    "Fate/Grand Order",
+    "Fate/Grand Order"
 ]
 
 # Skip these entries if it's a TV and contains one of these:
@@ -301,7 +303,12 @@ skip_seasons_entries = [
 
 # Exclude from removal
 exclude_from_removal = [
-    "Kara no Kyoukai Movie: Mirai Fukuin"
+    "Kara no Kyoukai Movie: Mirai Fukuin",
+    "White Album 2",
+    "FLCL",
+    "Detroit Metal City",
+    "Hellsing Ultimate",
+    "Re: Cutey Honey"
 ]
 
 f = open('matched-anime-list.json')
@@ -310,14 +317,15 @@ parsed = [] # list of parsed names
 
 for i in data['data']:
 
+    keep_entry = False
+
+    if i['title'] in exclude_from_removal:
+        keep_entry = True
+
     # Only keep movies or TV shows
-    if i['type'] == 'MOVIE' or i['type'] == 'TV':
+    if i['type'] == 'MOVIE' or i['type'] == 'TV' or keep_entry:
 
         skip_loop = False
-        keep_entry = False
-
-        if i['title'] in exclude_from_removal:
-            keep_entry = True
 
         # Remove extra unwanted entries if it's in the title
         if i['title'] in remove_anime and not keep_entry:
@@ -382,7 +390,7 @@ for i in data['data']:
             continue
 
         try:
-            if i['title'] != i['en'] and i['en'] is not None:
+            if i['en'] is not None:
                 new_synonyms.insert(0, i['en'])
         except KeyError:
             pass
@@ -402,3 +410,5 @@ df.reset_index().to_json(r'parsed-anime-list.json', orient='records', indent=2)
 # Remove additional columns for mini version
 df = df.drop(['type'], axis=1) # remove columns
 df.reset_index().to_json(r'parsed-anime-list-mini.json', orient='records')
+
+print(df.count)
