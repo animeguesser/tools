@@ -1,37 +1,42 @@
 import boto3
 import os
+import json
 
 def lambda_handler(event, context):
-    source_name = os.getenv('SOURCE_BUCKET_NAME')
-    target_name = os.getenv('TARGET_BUCKET_NAME')
+    bucket = os.getenv('BUCKET')
 
     # Log into AWS
-    session = boto3.Session( aws_access_key_id=os.getenv('ACCESS_KEY'), aws_secret_access_key=os.getenv('SECRET_ACCESS_KEY'))
-    s3 = session.resource('s3')
-    source_bucket = s3.Bucket(source_name)
-    target_bucket = s3.Bucket(target_name)
-
-    # Grab all keys from S3
-    keys = []
-    for obj in source_bucket.objects.all():
-        keys.append(obj.key)
-    keys.sort()
-
-    # Get first key, split it, and grab the folder out of it
-    first = keys[0].split('/')
-
-    # Loop through all keys and only move the 'first' one
-    for key in keys:
-        if first[0] in key:
-            copy_source = {
-                'Bucket': source_name,
-                'Key': key
-            }
-
-            target_bucket.copy(copy_source, f'days/{key}')
-            s3.Object(source_name, key).delete()
-
+    s3_client = boto3.client(
+        's3', 
+        aws_access_key_id=os.getenv('ACCESS_KEY'), 
+        aws_secret_access_key=os.getenv('SECRET_ACCESS_KEY'), 
+        region_name="us-east-2"
+    )
     
+    # Get current bucket policy
+    response = s3_client.get_bucket_policy(
+        Bucket=bucket
+    )
+    
+    # Load bucket policy
+    policy = json.loads(response['Policy'])
+    policy_resource = policy['Statement'][0]['Resource']
+
+    # Get the next day
+    resource_split = policy_resource[-1].split('/')
+    next_day = int(resource_split[1]) + 1
+
+    # Update bucket policy with next day
+    policy_resource.append(f'{resource_split[0]}/{next_day}/*')
+
+    print(policy_resource)
+
+    # Upload updated policy back to S3
+    policy['Statement'][0]['Resource'] = policy_resource
+    response = s3_client.put_bucket_policy(
+        Bucket=bucket,
+        Policy=json.dumps(policy)
+    )
 
 if __name__ == "__main__":
     lambda_handler('a', 'b')
