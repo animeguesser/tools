@@ -29,10 +29,10 @@ while offset < 5000:
 
 # Get the list of movie animes using MAL API
 offset = 0
-while offset < 250:
+while offset < 500:
     
     # Limit to 250 entries at a time
-    url = f'https://api.myanimelist.net/v2/anime/ranking?ranking_type=movie&fields=id,title,alternative_titles&limit=250&offset={offset}'
+    url = f'https://api.myanimelist.net/v2/anime/ranking?ranking_type=movie&fields=id,title,alternative_titles&limit=500&offset={offset}'
     resp = requests.get(url, headers={
         'X-MAL-CLIENT-ID': CLIENT_ID
     })
@@ -43,7 +43,7 @@ while offset < 250:
         anime_list.append({'title': node['node']['title'], 'id': node['node']['id'], 'en': node['node']['alternative_titles']['en']})
 
     # Start at the next 250
-    offset = offset + 250
+    offset = offset + 500
 
     # Let's not spam the MAL API
     time.sleep(1)

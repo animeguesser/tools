@@ -21,6 +21,10 @@ manual_match = [
     {
         'mal_match': 'Mukamuka Paradise',
         'db_match': 'Muka Muka Paradise'
+    },
+    {
+        'mal_match': 'Maoujou de Oyasumi',
+        'db_match': 'Maou-jou de Oyasumi'
     }
 ]
 

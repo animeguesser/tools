@@ -147,6 +147,9 @@ remove_anime = [
     "Saenai Heroine no Sodatekata \u266d",
     "Working'!!",
     "WWW.Working!!",
+    "Cutey Honey",
+    "Cutie Honey Universe",
+    "Cutey Honey F",
 
     # Similar synonyms 
     "Shi Er Shengxiao: Fuxing Gao Zhao Zhu Xiao Ba",
@@ -308,7 +311,8 @@ exclude_from_removal = [
     "FLCL",
     "Detroit Metal City",
     "Hellsing Ultimate",
-    "Re: Cutey Honey"
+    "Re: Cutey Honey",
+    "Top wo Nerae! Gunbuster"
 ]
 
 f = open('matched-anime-list.json')
