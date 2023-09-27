@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build and save parsed anime list
+    name: Build parsed list
     runs-on: ubuntu-latest
     defaults:
       run:
