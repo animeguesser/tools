@@ -1,0 +1,56 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - parse-anime/**
+
+jobs:
+  build:
+    name: Build and save parsed anime list
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./parse-anime
+
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install pip packages
+      run: |
+        pip install -r ./requirements.txt
+
+    - name: Get MAL list
+      run: |
+        python ./get-mal.py --mal ${{ secrets.MAL_CLIENT_ID }}
+
+    - name: Download Offline Anime DB
+      run: |
+        wget https://github.com/manami-project/anime-offline-database/raw/master/anime-offline-database.json
+
+    - name: Match MAL to Offline DB
+      run: |
+        python ./match-mal-offlinedb.py
+
+    - name: Parse anime list
+      run: |
+        python ./parse-anime.py
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.PARSE_AWS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.PARSE_AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+        role-duration-seconds: 1200
+
+    - name: Copy parsed anime list to S3
+      run: |
+        aws s3 sync . ${{ secrets.PARSE_BUCKET }} --exclude "*" --include "*.json"
+    
