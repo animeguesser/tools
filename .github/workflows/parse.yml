@@ -53,4 +53,10 @@ jobs:
     - name: Copy parsed anime list to S3
       run: |
         aws s3 sync . ${{ secrets.PARSE_BUCKET }} --exclude "*" --include "*.json"
+
+    - name: Add parsed list to Github
+      run: |
+        git add parsed-anime-list-mini.json
+        git commit -m "update parsed list"
+        git push
     
