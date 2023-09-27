@@ -2,8 +2,15 @@ import requests
 import time
 import json
 import os
+import argparse
+
+# Arguments
+parser = argparse.ArgumentParser()
+parser.add_argument("--mal", type=str, required=True)
+args = parser.parse_args()
+
 # Setup
-CLIENT_ID = os.getenv('MAL_CLIENT_ID')
+CLIENT_ID = args.mal
 offset = 0
 anime_list = []
 
