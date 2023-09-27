@@ -56,7 +56,9 @@ jobs:
 
     - name: Add parsed list to Github
       run: |
-        git add parsed-anime-list-mini.json
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "<>"
+        git add --force parsed-anime-list-mini.json
         git commit -m "update parsed list"
-        git push
+        git push origin main
     
