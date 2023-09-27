@@ -76,3 +76,4 @@ with open('matched-anime-list.json', 'w') as f:
 
 # Print out unmatched titles
 print(f'Could not match the following, add manually (if wanted)\n: {unmatched_list}')
+
