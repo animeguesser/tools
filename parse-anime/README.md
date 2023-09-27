@@ -6,14 +6,13 @@ a sufficent list for our needs.
 Upon completion of the script, it will output a file `mal.json` that can be used in the next python script.
 
 ## Running
-You must use your MyAnimeList API as an environment variable under the key `MAL_CLIENT_ID`.
-
-Example in linux:
-```
-export MAL_CLIENT_ID='abc1234'
-```
+You must use your MyAnimeList API as an command line argument `--mal`.
 
 You can then run the script as a normal python script and it will product an output file in JSON for you.
+
+```
+python parse-anime.py --mal <client_id>
+```
 
 # Match MAL offline db
 Using the anime database list from: https://github.com/manami-project/anime-offline-database, this python script will match the animes from the top MyAnimeList ratings to items within the offline database.We want to use the offline database as it contains synonyms that animes could be called instead of their titles. 
