@@ -411,12 +411,8 @@ df = pd.DataFrame(parsed)
 df = df.drop(['sources', 'status', 'picture', 'thumbnail', 'relations', 'tags', 'episodes', 'animeSeason'], axis=1)
 df.reset_index().to_json(r'internal-anime-list.json', orient='records', indent=2)
 
-# Remove items for production usage
-df = df.drop(['en', 'mal_id'], axis=1) # remove columns
-df.reset_index().to_json(r'parsed-anime-list.json', orient='records', indent=2)
-
 # Remove additional columns for mini version
-df = df.drop(['type'], axis=1) # remove columns
+df = df.drop(['en', 'mal_id', 'type'], axis=1) # remove columns
 df.reset_index().to_json(r'parsed-anime-list-mini.json', orient='records')
 
 print(df.count)
