@@ -61,4 +61,12 @@ jobs:
         git add --force parsed-anime-list-mini.json
         git commit -m "update parsed list"
         git push origin main
+
+    - name: Rebuild metadata search
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        token: ${{ secrets.DISPATCH_PAT }}
+        repository: animeguesser/metadata-creator-api
+        event-type: build
+        client-payload: '{"action": "build", "route": "search"}'
     
