@@ -70,3 +70,10 @@ jobs:
         event-type: build
         client-payload: '{"action": "build", "route": "search"}'
     
+    - name: Rebuild API search
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        token: ${{ secrets.DISPATCH_PAT }}
+        repository: animeguesser/anime-api
+        event-type: build
+        client-payload: '{"action": "build", "route": "search"}'
