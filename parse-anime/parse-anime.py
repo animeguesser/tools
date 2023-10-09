@@ -152,7 +152,8 @@ remove_anime = [
     "Cutey Honey F",
     "D.C.II: Da Capo II",
     "D.C.III: Da Capo III",
-    "Layton Kyouju to Eien no Utahime",
+    "Danganronpa 3: The End of Kibougamine Gakuen - Zetsubou-hen",
+    "Danganronpa 3: The End of Kibougamine Gakuen - Mirai-hen",
 
     # Similar synonyms 
     "Shi Er Shengxiao: Fuxing Gao Zhao Zhu Xiao Ba",
