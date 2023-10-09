@@ -316,7 +316,8 @@ exclude_from_removal = [
     "Detroit Metal City",
     "Hellsing Ultimate",
     "Re: Cutey Honey",
-    "Top wo Nerae! Gunbuster"
+    "Top wo Nerae! Gunbuster",
+    "Ginga Eiyuu Densetsu"
 ]
 
 f = open('matched-anime-list.json')
