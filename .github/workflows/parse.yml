@@ -58,6 +58,7 @@ jobs:
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "<>"
+        git pull origin main
         git add --force parsed-anime-list-mini.json
         git commit -m "update parsed list"
         git push origin main
