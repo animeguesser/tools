@@ -154,6 +154,7 @@ remove_anime = [
     "D.C.III: Da Capo III",
     "Danganronpa 3: The End of Kibougamine Gakuen - Zetsubou-hen",
     "Danganronpa 3: The End of Kibougamine Gakuen - Mirai-hen",
+    "Kyoukai no Kanata Movie 1: I'll Be Here - Kako-hen",
 
     # Similar synonyms 
     "Shi Er Shengxiao: Fuxing Gao Zhao Zhu Xiao Ba",
