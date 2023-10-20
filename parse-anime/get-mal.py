@@ -32,11 +32,11 @@ while offset < 5000:
     offset = offset + 500
 
     # Let's not spam the MAL API
-    time.sleep(1)
+    time.sleep(0.5)
 
 # Get the list of movie animes using MAL API
 offset = 0
-while offset < 500:
+while offset < 1000:
     
     # Limit to 250 entries at a time
     url = f'https://api.myanimelist.net/v2/anime/ranking?ranking_type=movie&fields=id,title,alternative_titles&limit=500&offset={offset}'
@@ -49,11 +49,11 @@ while offset < 500:
     for node in anime['data']:
         anime_list.append({'title': node['node']['title'], 'id': node['node']['id'], 'en': node['node']['alternative_titles']['en']})
 
-    # Start at the next 250
+    # Start at the next 500
     offset = offset + 500
 
     # Let's not spam the MAL API
-    time.sleep(1)
+    time.sleep(0.5)
 
 # Get the list of ova animes using MAL API
 offset = 0
@@ -74,7 +74,7 @@ while offset < 500:
     offset = offset + 500
 
     # Let's not spam the MAL API
-    time.sleep(1)
+    time.sleep(0.5)
 
 # Write to disk
 with open('mal.json', 'w') as f:
