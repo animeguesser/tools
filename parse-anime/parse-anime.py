@@ -94,9 +94,8 @@ remove_anime = [
     "Zutto Mae kara Suki deshita. Kokuhaku Jikkou Iinkai",
     "Fairy Tail: 100 Years Quest",
     "Hong Mao Lan Tu MTV",
-    "Fate\/stay night: Unlimited Blade Works",
-    "Fate\/Zero",
-    "Fate\/Zero Cafe",
+    "Fate/stay night: Unlimited Blade Works",
+    "Fate/Zero Cafe",
     "Final Fantasy VII: Advent Children - Venice Film Festival Footage",
     "Free! Dive to the Future: Ima kara demo Wakaru \u201cFree! Series\u201d",
     "Fruits Basket 1st Season",
@@ -311,6 +310,8 @@ skip_seasons_entries = [
 
 # Exclude from removal
 exclude_from_removal = [
+    "Golden Boy",
+    "Fate/Zero",
     "Kara no Kyoukai Movie: Mirai Fukuin",
     "White Album 2",
     "FLCL",
