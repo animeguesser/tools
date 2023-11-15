@@ -154,6 +154,9 @@ remove_anime = [
     "Danganronpa 3: The End of Kibougamine Gakuen - Zetsubou-hen",
     "Danganronpa 3: The End of Kibougamine Gakuen - Mirai-hen",
     "Kyoukai no Kanata Movie 1: I'll Be Here - Kako-hen",
+    "Rurouni Kenshin: Meiji Kenkaku Romantan - Ishinshishi e no Chinkonka",
+    "Rurouni Kenshin: Meiji Kenkaku Romantan (2023)",
+    "Tamako Love Story",
 
     # Similar synonyms 
     "Shi Er Shengxiao: Fuxing Gao Zhao Zhu Xiao Ba",
