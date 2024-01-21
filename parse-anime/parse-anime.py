@@ -323,7 +323,8 @@ exclude_from_removal = [
     "Re: Cutey Honey",
     "Top wo Nerae! Gunbuster",
     "Ginga Eiyuu Densetsu",
-    "Shiguang Dailiren"
+    "Shiguang Dailiren",
+    "Devilman: Crybaby"
 ]
 
 f = open('matched-anime-list.json')
