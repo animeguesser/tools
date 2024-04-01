@@ -158,7 +158,7 @@ remove_anime = [
     "Rurouni Kenshin: Meiji Kenkaku Romantan (2023)",
     "Tamako Love Story",
     "To LOVE-Ru Darkness 2nd",
-    "To LOVE Ru Darkness",
+    "To LOVE-Ru Darkness",
 
     # Similar synonyms 
     "Shi Er Shengxiao: Fuxing Gao Zhao Zhu Xiao Ba",
