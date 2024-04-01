@@ -159,7 +159,7 @@ remove_anime = [
     "Tamako Love Story",
     "To LOVE-Ru Darkness 2nd",
     "To LOVE Ru Darkness",
-    
+
     # Similar synonyms 
     "Shi Er Shengxiao: Fuxing Gao Zhao Zhu Xiao Ba",
     "Fuxing Ba Jie",
@@ -422,7 +422,7 @@ for i in data['data']:
 df = pd.DataFrame(parsed)
 
 # Output for internal usage
-df = df.drop(['sources', 'status', 'picture', 'thumbnail', 'relations', 'tags', 'episodes', 'animeSeason'], axis=1)
+df = df.drop(['sources', 'status', 'picture', 'thumbnail', 'tags', 'episodes', 'animeSeason'], axis=1)
 df.reset_index().to_json(r'internal-anime-list.json', orient='records', indent=2)
 
 # Remove additional columns for mini version
